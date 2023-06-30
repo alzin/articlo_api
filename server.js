@@ -94,6 +94,6 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
 });
