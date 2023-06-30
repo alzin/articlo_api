@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const PORT = 3000;
 const cors = require("cors");
 const express = require("express");
 const app = express();
@@ -25,6 +26,10 @@ const editController = container.resolve("editController");
 
 app.use(cors());
 app.use(express.json());
+
+app.post('/', (req, res) => {
+  res.send('Hello, World!');
+});
 
 app.post("/ask", articleDataController.ask.bind(articleDataController));
 app.post("/edit", editController.edit.bind(editController));
@@ -89,6 +94,6 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log("Server started on port 5000");
+server.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}/`);
 });
