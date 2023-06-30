@@ -27,6 +27,10 @@ const editController = container.resolve("editController");
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
 app.post('/', (req, res) => {
   res.send('Hello, World!');
 });
