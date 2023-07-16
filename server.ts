@@ -1,16 +1,16 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+import cors from "cors";
+import express from "express";
+import mongoose from "mongoose";
+import { ObjectId } from "mongodb";
+import container from "./container";
+import User from "./models/User";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import Article from "./models/Article";
 
 const PORT = process.env.PORT || 3000;
-const cors = require("cors");
-const express = require("express");
 const app = express();
-const container = require("./container");
-const User = require("./models/User");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
-const Article = require("./models/Article");
-const { ObjectId } = require("mongodb");
 
 let userId = new ObjectId("64ac1c9000bc4a4d5e81a04d");
 

@@ -1,18 +1,12 @@
-const {
-  createContainer,
-  asClass,
-  asValue,
-  Lifetime,
-  InjectionMode,
-} = require("awilix");
-const OpenAIService = require("./services/OpenAIService");
-const YouTubeService = require("./services/YouTubeService");
-const GenerateImageUseCase = require("./usecases/GenerateImageUseCase");
-const GenerateCustomArticleUseCase = require("./usecases/GenerateCustomArticleUseCase");
-const GetYouTubeVideosUseCase = require("./usecases/GetYouTubeVideosUseCase");
-const EditArticleUseCase = require("./usecases/EditArticleUseCase");
-const ArticleDataController = require("./controllers/ArticleDataController");
-const EditController = require("./controllers/EditController");
+import { createContainer, asClass, asValue, Lifetime, InjectionMode } from "awilix";
+import OpenAIService from "./services/OpenAIService";
+import YouTubeService from "./services/YouTubeService";
+import GenerateImageUseCase from "./usecases/GenerateImageUseCase";
+import GenerateCustomArticleUseCase from "./usecases/GenerateCustomArticleUseCase";
+import GetYouTubeVideosUseCase from "./usecases/GetYouTubeVideosUseCase";
+import EditArticleUseCase from "./usecases/EditArticleUseCase";
+import ArticleDataController from "./controllers/ArticleDataController";
+import EditController from "./controllers/EditController";
 
 const container = createContainer({
   injectionMode: InjectionMode.CLASSIC,
