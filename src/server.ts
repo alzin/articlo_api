@@ -1,8 +1,8 @@
 import { log } from "console";
-import express, { Request, Response } from "express";
+import express from "express";
 import dotenv from "dotenv";
-import setupMiddlewares from "./config/middlewares";
-import { articleController } from "../DI/article-container";
+import setupMiddlewares from "./main/config/middlewares";
+import { articleController } from "./DI/article-container";
 
 dotenv.config();
 
