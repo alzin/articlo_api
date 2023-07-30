@@ -10,22 +10,22 @@ export class ArticleController {
 
   async getArticle(req: any, res: any) {
     try {
-      const prompt = req.query.prompt;
-      log(prompt);
-      if (prompt == null) {
-        res.status(400).send({
-          oopps: "really!!"
-        });
+      const prompt = req.body.prompt;
+      log(`getArticle: ${prompt}`);
+      if (prompt.length == 0) {
+        log(`getArticle: empty prompt`);
+        res.status(400).send();
         return;
-      } 
+      }
 
       const article = await this.createArticle.execute(prompt);
       const imageUrl = await this.createImage.execute(prompt);
 
-      res.status(200).send({
+      res.status(200).json({
         title: article.title,
+        url: imageUrl,
         body: article.body,
-        image: imageUrl,
+        videos: [],
       });
       log(article);
     } catch (error) {

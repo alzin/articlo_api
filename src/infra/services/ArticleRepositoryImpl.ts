@@ -1,9 +1,8 @@
+import "../../main/config/loadEnv";
 import { log } from "console";
 import { Article } from "../../domain/entities/Article";
 import { ArticleRepository } from "../../domain/interfaces/ArticleRepository";
 import { extractTitle, extractBody } from "../../utils/articleUtils";
-import dotenv from "dotenv";
-dotenv.config();
 
 import {
   Configuration,
