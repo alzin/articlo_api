@@ -1,6 +1,6 @@
 import { log } from "console";
-import { CreateArticleUseCase } from "../domain/usecases/CreateArticleUseCase";
-import { CreateImageUseCase } from "../domain/usecases/CreateImageUseCase";
+import { CreateArticleUseCase } from "../application/usecases/CreateArticleUseCase";
+import { CreateImageUseCase } from "../application/usecases/CreateImageUseCase";
 
 export class ArticleController {
   constructor(
@@ -12,9 +12,9 @@ export class ArticleController {
     try {
       const prompt = req.body.prompt;
       log(`getArticle: ${prompt}`);
-      if (prompt.length == 0) {
-        log(`getArticle: empty prompt`);
-        res.status(400).send();
+      if (!prompt || typeof prompt !== "string" || prompt.trim().length === 0) {
+        log(`getArticle: invalid prompt`);
+        res.status(400).json({ error: "Invalid prompt. Please provide a non-empty string." });
         return;
       }
 

@@ -1,6 +1,6 @@
 import { Article } from "../entities/Article";
 
 export interface ArticleRepository {
-  createArticle(prompt: String): Promise<Article>;
+  createArticle(prompt: string): Promise<Article>;
   createImage(prompt: string): Promise<string>;
 }

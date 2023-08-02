@@ -1,4 +1,4 @@
-import { ArticleRepository } from "../interfaces/ArticleRepository";
+import { ArticleRepository } from "../../domain/repositories/ArticleRepository";
 
 export class CreateImageUseCase {
   constructor(private readonly articleRepository: ArticleRepository) {}
