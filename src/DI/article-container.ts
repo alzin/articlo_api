@@ -1,7 +1,7 @@
-import { ArticleController } from "../controllers/ArticleController";
 import { CreateArticleUseCase } from "../application/usecases/CreateArticleUseCase";
 import { CreateImageUseCase } from "../application/usecases/CreateImageUseCase";
 import { ArticleRepositroyImplt } from "../infra/services/ArticleRepositoryImpl";
+import { ArticleController } from "../controllers/ArticleController";
 
 const articleRepository = new ArticleRepositroyImplt();
 const createArticle = new CreateArticleUseCase(articleRepository);
@@ -10,3 +10,11 @@ export const articleController = new ArticleController(
   createArticle,
   createImage,
 );
+
+import { AuthRepositoryImpt } from "../infra/services/AuthRepositoryImpt";
+import { SignInUseCase } from "../application/usecases/auth/SignInUseCase";
+import { AuthController } from "../controllers/auth/AuthController";
+
+const authRepository = new AuthRepositoryImpt();
+const signInUseCase = new SignInUseCase(authRepository);
+export const authController = new AuthController(signInUseCase);

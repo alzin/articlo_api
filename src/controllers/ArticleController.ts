@@ -1,6 +1,6 @@
 import { log } from "console";
-import { CreateArticleUseCase } from "../application/usecases/CreateArticleUseCase";
-import { CreateImageUseCase } from "../application/usecases/CreateImageUseCase";
+import { CreateArticleUseCase } from "@application/usecases/CreateArticleUseCase";
+import { CreateImageUseCase } from "@application/usecases/CreateImageUseCase";
 
 export class ArticleController {
   constructor(
@@ -14,7 +14,9 @@ export class ArticleController {
       log(`getArticle: ${prompt}`);
       if (!prompt || typeof prompt !== "string" || prompt.trim().length === 0) {
         log(`getArticle: invalid prompt`);
-        res.status(400).json({ error: "Invalid prompt. Please provide a non-empty string." });
+        res.status(400).json({
+          error: "Invalid prompt. Please provide a non-empty string.",
+        });
         return;
       }
 

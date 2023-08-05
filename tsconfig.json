@@ -1,5 +1,16 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@application/*": ["application/*"],
+      "@controllers/*": ["controllers/*"],
+      "@DI/*": ["DI/*"],
+      "@domain/*": ["domain/*"],
+      "@infra/*": ["infra/*"],
+      "@main/*": ["main/*"],
+      "@utils/*": ["utils/*"]
+    },
+    "rootDirs": ["src"],
     "target": "es5",
     "module": "commonjs",
     "lib": ["es6", "dom"],

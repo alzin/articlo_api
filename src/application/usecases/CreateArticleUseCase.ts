@@ -1,5 +1,5 @@
-import { ArticleRepository } from "../../domain/repositories/ArticleRepository";
-import { Article } from "../../domain/entities/Article";
+import { ArticleRepository } from "@domain/repositories/ArticleRepository";
+import { Article } from "@domain/entities/Article";
 
 export class CreateArticleUseCase {
   constructor(private readonly articleRepository: ArticleRepository) {}

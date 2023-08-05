@@ -1,6 +1,6 @@
 import "../../main/config/loadEnv";
-import { Article } from "../../domain/entities/Article";
-import { ArticleRepository } from "../../domain/repositories/ArticleRepository";
+import { Article } from "@domain/entities/Article";
+import { ArticleRepository } from "@domain/repositories/ArticleRepository";
 
 import {
   Configuration,
@@ -62,7 +62,9 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       this.imageParams.prompt = prompt;
       const response = await this.openai.createImage(this.imageParams);
       const imageUrl = response.data.data[0]?.url;
-      return imageUrl ? imageUrl : Promise.reject(new Error("Failed to create image."));
+      return imageUrl
+        ? imageUrl
+        : Promise.reject(new Error("Failed to create image."));
     } catch (error) {
       console.error("createImage: " + error);
       throw new Error("Failed to create image.");
