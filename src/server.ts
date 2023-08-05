@@ -18,14 +18,20 @@ DbConnection.connect()
   })
   .catch(console.log);
 
-app.get("/", (req, res) => {
-  res.send("Articlo API server");
-});
-
-app.post("/article", (req, res) => {
-  articleController.getArticle(req, res);
+app.get("/", (_, res) => {
+  const today = new Date().toLocaleDateString();
+  res.send(`Articlo SERVER is running ${today}`);
 });
 
 app.post("/api/login", (req, res) => {
   authController.login(req, res);
+});
+
+app.post("/api/signup", (req, res) => {
+  log("signup");
+  authController.signup(req, res);
+});
+
+app.post("/api/article", (req, res) => {
+  articleController.getArticle(req, res);
 });
