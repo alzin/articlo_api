@@ -1,6 +1,6 @@
-import { UserEntity } from "../../domain/entities/UserEntity";
-import { AuthRepository } from "../../domain/repositories/auth/AuthRepository";
-import User from "../DB/models/User";
+import { UserEntity } from "../../../domain/entities/UserEntity";
+import { AuthRepository } from "../../../domain/repositories/auth/AuthRepository";
+import User from "../../DB/models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 

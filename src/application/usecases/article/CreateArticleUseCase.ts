@@ -1,4 +1,4 @@
-import { ArticleRepository } from "@domain/repositories/ArticleRepository";
+import { ArticleRepository } from "@domain/repositories/article/ArticleRepository";
 import { Article } from "@domain/entities/Article";
 
 export class CreateArticleUseCase {

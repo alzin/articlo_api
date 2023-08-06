@@ -1,4 +1,4 @@
-import { Article } from "../entities/Article";
+import { Article } from "../../entities/Article";
 
 export interface ArticleRepository {
   createArticle(prompt: string): Promise<Article>;

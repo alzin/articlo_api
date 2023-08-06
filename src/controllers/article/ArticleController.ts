@@ -1,6 +1,6 @@
 import { log } from "console";
-import { CreateArticleUseCase } from "@application/usecases/CreateArticleUseCase";
-import { CreateImageUseCase } from "@application/usecases/CreateImageUseCase";
+import { CreateArticleUseCase } from "@application/usecases/article/CreateArticleUseCase";
+import { CreateImageUseCase } from "@application/usecases/article/CreateImageUseCase";
 
 export class ArticleController {
   constructor(

@@ -1,6 +1,6 @@
-import "../../main/config/loadEnv";
+import "../../../main/config/loadEnv";
 import { Article } from "@domain/entities/Article";
-import { ArticleRepository } from "@domain/repositories/ArticleRepository";
+import { ArticleRepository } from "@domain/repositories/article/ArticleRepository";
 
 import {
   Configuration,
@@ -10,7 +10,7 @@ import {
   CreateImageRequest,
   CreateImageRequestSizeEnum,
 } from "openai";
-import { AppConstants } from "../../utils/constants";
+import { AppConstants } from "../../../utils/constants";
 
 export class ArticleRepositroyImplt implements ArticleRepository {
   private openai: OpenAIApi;

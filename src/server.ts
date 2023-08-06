@@ -2,7 +2,8 @@ import "./main/config/loadEnv";
 import { log } from "console";
 import express from "express";
 import setupMiddlewares from "./main/config/middlewares";
-import { articleController, authController } from "./DI/article-container";
+import { articleController } from "./DI/article/article-container";
+import { authController } from "./DI/auth/auth-container";
 import DbConnection from "./infra/DB/helper/db-connection";
 
 const app = express();
