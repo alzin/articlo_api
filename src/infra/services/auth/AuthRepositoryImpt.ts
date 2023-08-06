@@ -40,7 +40,7 @@ export class AuthRepositoryImpt implements AuthRepository {
     });
 
     await newUser.save();
-    
+
     return true;
   }
 }

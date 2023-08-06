@@ -6,7 +6,7 @@ export class AuthController {
   constructor(
     private readonly signInUseCase: SignInUseCase,
     private readonly signUpUseCase: SignUpUseCase,
-    ) {}
+  ) {}
 
   async login(req: any, res: any) {
     const { email, password } = req.body;
@@ -29,5 +29,4 @@ export class AuthController {
     }
     return res.status(200).json({ message: "User created successfully" });
   }
-
 }

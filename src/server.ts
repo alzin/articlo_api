@@ -29,7 +29,6 @@ app.post("/api/login", (req, res) => {
 });
 
 app.post("/api/signup", (req, res) => {
-  log("signup");
   authController.signup(req, res);
 });
 

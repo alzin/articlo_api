@@ -1,11 +1,13 @@
 import { log } from "console";
 import { CreateArticleUseCase } from "@application/usecases/article/CreateArticleUseCase";
 import { CreateImageUseCase } from "@application/usecases/article/CreateImageUseCase";
+import { SearchYoutubeVideosUseCase } from "@application/usecases/article/SearchYoutubeVideosUseCase";
 
 export class ArticleController {
   constructor(
     private createArticle: CreateArticleUseCase,
     private createImage: CreateImageUseCase,
+    private searchVideos: SearchYoutubeVideosUseCase,
   ) {}
 
   async getArticle(req: any, res: any) {
@@ -20,6 +22,8 @@ export class ArticleController {
         return;
       }
 
+      const videos = await this.searchVideos.execute(prompt);
+      log(videos);
       const article = await this.createArticle.execute(prompt);
       const imageUrl = await this.createImage.execute(prompt);
 
@@ -27,7 +31,7 @@ export class ArticleController {
         title: article.title,
         url: imageUrl,
         body: article.body,
-        videos: [],
+        videos: videos,
       });
       log(article);
     } catch (error) {
