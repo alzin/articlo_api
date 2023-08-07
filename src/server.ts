@@ -1,10 +1,12 @@
 import "./main/config/loadEnv";
 import { log } from "console";
+import { Request, Response } from "express";
 import express from "express";
 import setupMiddlewares from "./main/config/middlewares";
 import { articleController } from "./DI/article/article-container";
 import { authController } from "./DI/auth/auth-container";
 import DbConnection from "./infra/DB/helper/db-connection";
+import { authenticateToken } from "./main/middlewares/auth";
 
 const app = express();
 setupMiddlewares(app);
@@ -32,6 +34,6 @@ app.post("/api/signup", (req, res) => {
   authController.signup(req, res);
 });
 
-app.post("/api/article", (req, res) => {
+app.post("/api/article", authenticateToken, (req: Request, res: Response) => {
   articleController.getArticle(req, res);
 });

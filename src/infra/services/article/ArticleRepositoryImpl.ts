@@ -11,6 +11,7 @@ import {
   CreateImageRequestSizeEnum,
 } from "openai";
 import { AppConstants } from "../../../utils/constants";
+import { log } from "console";
 
 export class ArticleRepositroyImplt implements ArticleRepository {
   private openai: OpenAIApi;
@@ -48,12 +49,23 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       });
 
       const text = response.data.choices?.[0]?.message?.content ?? "";
-      article = JSON.parse(text);
-
+      if (this.isJSON(text)) {
+        article = JSON.parse(text);
+      }
+      
       return article;
     } catch (error) {
       console.error("error: ", error);
       throw new Error("Failed to create article.");
+    }
+  }
+
+  isJSON(str: string): boolean {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 
