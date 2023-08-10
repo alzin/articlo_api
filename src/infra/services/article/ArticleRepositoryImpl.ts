@@ -52,7 +52,8 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       if (this.isJSON(text)) {
         article = JSON.parse(text);
       }
-      
+
+      this.messages.pop();
       return article;
     } catch (error) {
       console.error("error: ", error);
