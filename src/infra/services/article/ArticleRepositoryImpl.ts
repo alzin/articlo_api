@@ -11,7 +11,6 @@ import {
   CreateImageRequestSizeEnum,
 } from "openai";
 import { AppConstants } from "../../../utils/constants";
-import { log } from "console";
 
 export class ArticleRepositroyImplt implements ArticleRepository {
   private openai: OpenAIApi;
@@ -26,6 +25,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
     n: 1,
     size: CreateImageRequestSizeEnum._512x512,
   };
+  private article: Article = {title: "", body: "" };
 
   constructor() {
     this.openai = new OpenAIApi(
@@ -36,28 +36,30 @@ export class ArticleRepositroyImplt implements ArticleRepository {
   }
 
   async createArticle(prompt: string): Promise<Article> {
+    this.article = {title: prompt, body: "" };
     this.messages.push({
       role: ChatCompletionRequestMessageRoleEnum.User,
       content: prompt,
     });
-    let article: Article = { title: "", body: "" };
 
     try {
       const response = await this.openai.createChatCompletion({
         model: AppConstants.ModelName,
         messages: this.messages,
       });
-
+      
       const text = response.data.choices?.[0]?.message?.content ?? "";
+      this.article.body = text;
+
       if (this.isJSON(text)) {
-        article = JSON.parse(text);
+        this.article = JSON.parse(text);
       }
 
       this.messages.pop();
-      return article;
+      return this.article;
     } catch (error) {
       console.error("error: ", error);
-      throw new Error("Failed to create article.");
+      return this.article;
     }
   }
 

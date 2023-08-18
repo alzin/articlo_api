@@ -10,7 +10,7 @@ export class ArticleController {
     private searchVideos: SearchYoutubeVideosUseCase,
   ) {}
 
-  async getArticle(req: any, res: any) {
+  async generateArticle(req: any, res: any) {
     try {
       const prompt = req.body.prompt;
       log(`getArticle: ${prompt}`);

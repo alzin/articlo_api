@@ -35,5 +35,5 @@ app.post("/api/signup", (req, res) => {
 });
 
 app.post("/api/article", authenticateToken, (req: Request, res: Response) => {
-  articleController.getArticle(req, res);
+  articleController.generateArticle(req, res);
 });
