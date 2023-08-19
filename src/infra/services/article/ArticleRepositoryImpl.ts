@@ -1,5 +1,5 @@
 import "../../../main/config/loadEnv";
-import { Article } from "@domain/entities/Article";
+import { ArticleEntity } from "@domain/entities/ArticleEntity";
 import { ArticleRepository } from "@domain/repositories/article/ArticleRepository";
 
 import {
@@ -11,6 +11,8 @@ import {
   CreateImageRequestSizeEnum,
 } from "openai";
 import { AppConstants } from "../../../utils/constants";
+import User from "../../../infra/DB/models/User";
+import Article from "../../../infra/DB/models/Article";
 
 export class ArticleRepositroyImplt implements ArticleRepository {
   private openai: OpenAIApi;
@@ -25,7 +27,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
     n: 1,
     size: CreateImageRequestSizeEnum._512x512,
   };
-  private article: Article = {title: "", body: "" };
+  private article: ArticleEntity = { title: "", body: "" };
 
   constructor() {
     this.openai = new OpenAIApi(
@@ -35,8 +37,8 @@ export class ArticleRepositroyImplt implements ArticleRepository {
     );
   }
 
-  async createArticle(prompt: string): Promise<Article> {
-    this.article = {title: prompt, body: "" };
+  async createArticle(prompt: string): Promise<ArticleEntity> {
+    this.article = { title: prompt, body: "" };
     this.messages.push({
       role: ChatCompletionRequestMessageRoleEnum.User,
       content: prompt,
@@ -47,7 +49,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
         model: AppConstants.ModelName,
         messages: this.messages,
       });
-      
+
       const text = response.data.choices?.[0]?.message?.content ?? "";
       this.article.body = text;
 
@@ -83,6 +85,31 @@ export class ArticleRepositroyImplt implements ArticleRepository {
     } catch (error) {
       console.error("createImage: " + error);
       throw new Error("Failed to create image.");
+    }
+  }
+
+  async saveArticle(userId: any, article: ArticleEntity): Promise<boolean> {
+    try {
+      const user = await User.findById(userId).exec();
+
+      if (!user) {
+        console.log("ArticleRepositoryImpl: User not found");
+        return false;
+      }
+
+      const newArticle = new Article({
+        title: article.title,
+        body: article.body,
+        author: user._id,
+      });
+
+      const savedArticle = await newArticle.save();
+      console.log(`ArticleRepositoryImpl: Article saved: ${savedArticle}`);
+      
+      return savedArticle ? true : false;
+    } catch (error) {
+      console.error("ArticleRepositoryImpl: Error saving article:", error);
+      return false;
     }
   }
 }

@@ -1,10 +1,10 @@
 import { ArticleRepository } from "@domain/repositories/article/ArticleRepository";
-import { Article } from "@domain/entities/Article";
+import { ArticleEntity } from "@domain/entities/ArticleEntity";
 
 export class CreateArticleUseCase {
   constructor(private readonly articleRepository: ArticleRepository) {}
 
-  async execute(prompt: string): Promise<Article> {
+  async execute(prompt: string): Promise<ArticleEntity> {
     const createdArticle = await this.articleRepository.createArticle(prompt);
     return createdArticle;
   }
