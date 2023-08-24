@@ -1,7 +1,6 @@
 import "./main/config/loadEnv";
 import { log } from "console";
-import { Request, Response } from "express";
-import express from "express";
+import express, { Request, Response } from "express";
 import setupMiddlewares from "./main/config/middlewares";
 import { articleController } from "./DI/article/article-container";
 import { authController } from "./DI/auth/auth-container";
