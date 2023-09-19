@@ -13,6 +13,7 @@ import {
 import { AppConstants } from "../../../utils/constants";
 import User from "../../../infra/DB/models/User";
 import Article from "../../../infra/DB/models/Article";
+import { log } from "console";
 
 export class ArticleRepositroyImplt implements ArticleRepository {
   private openai: OpenAIApi;
@@ -51,6 +52,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       });
 
       const text = response.data.choices?.[0]?.message?.content ?? "";
+      log("article text: ", text);
       this.article.body = text;
 
       if (this.isJSON(text)) {
