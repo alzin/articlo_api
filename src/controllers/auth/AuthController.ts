@@ -1,6 +1,7 @@
 import { UserEntity } from "@domain/entities/UserEntity";
 import { SignInUseCase } from "@application/usecases/auth/SignInUseCase";
 import { SignUpUseCase } from "@application/usecases/auth/SignUpUseCase";
+import { log } from "console";
 
 export class AuthController {
   constructor(
@@ -20,6 +21,7 @@ export class AuthController {
   }
 
   async signup(req: any, res: any) {
+    log(req.body);
     const { username, email, password } = req.body;
     const user: UserEntity = { username, email, password };
 
