@@ -39,7 +39,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
   }
 
   async createArticle(prompt: string): Promise<ArticleEntity> {
-    this.article = { title: prompt, body: "" };
+    this.article = { title: "Title", body: "Body" };
     this.messages.push({
       role: ChatCompletionRequestMessageRoleEnum.User,
       content: prompt,
@@ -52,11 +52,11 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       });
 
       const text = response.data.choices?.[0]?.message?.content ?? "";
-      log("article text: ", text);
-      this.article.body = text;
-
+      
       if (this.isJSON(text)) {
         this.article = JSON.parse(text);
+      } else {
+        log("article text: ", text);
       }
 
       this.messages.pop();
