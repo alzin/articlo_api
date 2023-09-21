@@ -24,11 +24,11 @@ export class AuthRepositoryImpt implements AuthRepository {
     return token;
   }
 
-  async signup(user: UserEntity): Promise<boolean> {
+  async signup(user: UserEntity): Promise<string> {
     const isRegistered = await User.findOne({ email: user.email });
 
     if (isRegistered) {
-      return false;
+      return "";
     }
 
     const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -41,6 +41,7 @@ export class AuthRepositoryImpt implements AuthRepository {
 
     await newUser.save();
 
-    return true;
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET as string);
+    return token;
   }
 }

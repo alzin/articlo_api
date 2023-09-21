@@ -25,10 +25,10 @@ export class AuthController {
     const { username, email, password } = req.body;
     const user: UserEntity = { username, email, password };
 
-    const result = await this.signUpUseCase.execute(user);
-    if (!result) {
+    const token = await this.signUpUseCase.execute(user);
+    if (!token) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    return res.status(200).json({ message: "User created successfully" });
+    return res.status(200).json({ token });
   }
 }
