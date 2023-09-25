@@ -27,6 +27,7 @@ export class ArticleController {
       log(article);
 
       const imageUrl = await this.createImage.execute(prompt);
+      article.imageUrl = imageUrl;
       log(imageUrl);
 
       const videos = await this.searchVideos.execute(prompt);
@@ -34,7 +35,7 @@ export class ArticleController {
 
       res.status(200).json({
         title: article.title,
-        url: imageUrl,
+        url: article.imageUrl,
         body: article.body,
         videos: videos,
       });

@@ -15,6 +15,13 @@ import User from "../../../infra/DB/models/User";
 import Article from "../../../infra/DB/models/Article";
 import { log } from "console";
 
+import AWS from "aws-sdk";
+AWS.config.update({ 
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: "us-east-1" 
+});
+
 export class ArticleRepositroyImplt implements ArticleRepository {
   private openai: OpenAIApi;
   private messages: ChatCompletionRequestMessage[] = [
@@ -28,7 +35,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
     n: 1,
     size: CreateImageRequestSizeEnum._512x512,
   };
-  private article: ArticleEntity = { title: "", body: "" };
+  private article: ArticleEntity = { title: "", body: "", imageUrl: "" };
 
   constructor() {
     this.openai = new OpenAIApi(
@@ -39,7 +46,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
   }
 
   async createArticle(prompt: string): Promise<ArticleEntity> {
-    this.article = { title: "Title", body: "Body" };
+    this.article = { title: "Title", body: "Body", imageUrl: "" };
     this.messages.push({
       role: ChatCompletionRequestMessageRoleEnum.User,
       content: prompt,
@@ -81,6 +88,8 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       this.imageParams.prompt = prompt;
       const response = await this.openai.createImage(this.imageParams);
       const imageUrl = response.data.data[0]?.url;
+      // const b64Json = response.data.data[0]?.b64_json;
+
       return imageUrl
         ? imageUrl
         : Promise.reject(new Error("Failed to create image."));
@@ -102,6 +111,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       const newArticle = new Article({
         title: article.title,
         body: article.body,
+        imageUrl: article.imageUrl,
         author: user._id,
       });
 

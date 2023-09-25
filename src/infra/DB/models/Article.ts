@@ -9,12 +9,14 @@ interface IUser extends Document {
 interface IArticle extends Document {
   title: string;
   body: string;
+  imageUrl: string;
   author: IUser["_id"];
 }
 
 const ArticleSchema: Schema = new Schema({
   title: { type: String, required: true },
   body: { type: String, required: true },
+  imageUrl: { type: String, required: true },
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
