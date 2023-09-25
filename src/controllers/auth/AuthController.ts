@@ -21,7 +21,6 @@ export class AuthController {
   }
 
   async signup(req: any, res: any) {
-    log(req.body);
     const { username, email, password } = req.body;
     const user: UserEntity = { username, email, password };
 
