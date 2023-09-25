@@ -2,7 +2,7 @@
   "scripts": {
     "start": "npm run build && node --max-old-space-size=4096 build/server.js",
     "build": "rimraf ./build && tsc",
-    "start:dev": "npx nodemon",
+    "start:dev": "npx nodemon --max-old-space-size=4096",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
