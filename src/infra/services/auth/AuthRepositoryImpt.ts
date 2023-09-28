@@ -41,7 +41,10 @@ export class AuthRepositoryImpt implements AuthRepository {
 
     await newUser.save();
 
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET as string);
+    const token = jwt.sign(
+      { id: newUser._id },
+      process.env.JWT_SECRET as string,
+    );
     return token;
   }
 }

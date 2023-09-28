@@ -16,10 +16,10 @@ import Article from "../../../infra/DB/models/Article";
 import { log } from "console";
 
 import AWS from "aws-sdk";
-AWS.config.update({ 
+AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: "us-east-1" 
+  region: "us-east-1",
 });
 
 export class ArticleRepositroyImplt implements ArticleRepository {
@@ -59,7 +59,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       });
 
       const text = response.data.choices?.[0]?.message?.content ?? "";
-      
+
       if (this.isJSON(text)) {
         this.article = JSON.parse(text);
       } else {
@@ -88,7 +88,6 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       this.imageParams.prompt = prompt;
       const response = await this.openai.createImage(this.imageParams);
       const imageUrl = response.data.data[0]?.url;
-      // const b64Json = response.data.data[0]?.b64_json;
 
       return imageUrl
         ? imageUrl
@@ -117,7 +116,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
 
       const savedArticle = await newArticle.save();
       console.log(`ArticleRepositoryImpl: Article saved: ${savedArticle}`);
-      
+
       return savedArticle ? true : false;
     } catch (error) {
       console.error("ArticleRepositoryImpl: Error saving article:", error);

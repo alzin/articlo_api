@@ -1,6 +1,5 @@
 export class AppConstants {
-  public static readonly DEFAULT_ARTICLE_WRITING_GUIDELINE = 
-  `Act as a professional human writer who writes articles and blogs and do the following:
+  public static readonly DEFAULT_ARTICLE_WRITING_GUIDELINE = `Act as a professional human writer who writes articles and blogs and do the following:
   Write the article response in the following JSON structure. 
   Make sure of new line to be presented via use \\n.
   {

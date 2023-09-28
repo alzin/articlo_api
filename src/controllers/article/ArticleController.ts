@@ -3,6 +3,8 @@ import { CreateArticleUseCase } from "@application/usecases/article/CreateArticl
 import { CreateImageUseCase } from "@application/usecases/article/CreateImageUseCase";
 import { SearchYoutubeVideosUseCase } from "@application/usecases/article/SearchYoutubeVideosUseCase";
 import { SaveArticleUseCase } from "@application/usecases/article/SaveArticleUseCase";
+import { DownloadImageUseCase } from "@application/usecases/storage/DownloadImageUseCase";
+import { UploadImageToStorageUseCase } from "@application/usecases/storage/UploadImageToStorageUseCase";
 
 export class ArticleController {
   constructor(
@@ -10,6 +12,8 @@ export class ArticleController {
     private createImage: CreateImageUseCase,
     private searchVideos: SearchYoutubeVideosUseCase,
     private saveArticle: SaveArticleUseCase,
+    private downloadImage: DownloadImageUseCase,
+    private uploadImage: UploadImageToStorageUseCase,
   ) {}
 
   async generateArticle(req: any, res: any) {
@@ -28,7 +32,6 @@ export class ArticleController {
 
       const imageUrl = await this.createImage.execute(prompt);
       article.imageUrl = imageUrl;
-      log(imageUrl);
 
       const videos = await this.searchVideos.execute(prompt);
       log(videos);
@@ -40,6 +43,14 @@ export class ArticleController {
         videos: videos,
       });
       const userId = req.body.user.id;
+
+      const imageBuffer = await this.downloadImage.execute(imageUrl);
+      const imageStorageUrl = await this.uploadImage.execute(
+        userId,
+        imageBuffer,
+      );
+
+      article.imageUrl = imageStorageUrl;
       const savedArticle = await this.saveArticle.execute(userId, article);
       log(`Checking if article was saved... ${savedArticle}`);
     } catch (error) {

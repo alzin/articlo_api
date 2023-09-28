@@ -5,6 +5,9 @@ import { ArticleController } from "../../controllers/article/ArticleController";
 import { SearchYoutubeVideosUseCase } from "../../application/usecases/article/SearchYoutubeVideosUseCase";
 import { YoutubeRepositoryImpl } from "../../infra/services/article/YoutubeRepositoryImpl";
 import { SaveArticleUseCase } from "../../application/usecases/article/SaveArticleUseCase";
+import { DownloadImageUseCase } from "../../application/usecases/storage/DownloadImageUseCase";
+import { UploadImageToStorageUseCase } from "../../application/usecases/storage/UploadImageToStorageUseCase";
+import { ImageStorageRepositoryImpl } from "../../infra/services/storage/ImageStorageRepositoryImpl";
 
 const articleRepository = new ArticleRepositroyImplt();
 const createArticle = new CreateArticleUseCase(articleRepository);
@@ -14,9 +17,15 @@ const saveArticle = new SaveArticleUseCase(articleRepository);
 const youtubeRepository = new YoutubeRepositoryImpl();
 const searchYoutubeVideos = new SearchYoutubeVideosUseCase(youtubeRepository);
 
+const imageStorageRepository = new ImageStorageRepositoryImpl();
+const downloadImage = new DownloadImageUseCase(imageStorageRepository);
+const uploadImage = new UploadImageToStorageUseCase(imageStorageRepository);
+
 export const articleController = new ArticleController(
   createArticle,
   createImage,
   searchYoutubeVideos,
   saveArticle,
+  downloadImage,
+  uploadImage,
 );
