@@ -8,6 +8,7 @@ import { SaveArticleUseCase } from "../../application/usecases/article/SaveArtic
 import { DownloadImageUseCase } from "../../application/usecases/storage/DownloadImageUseCase";
 import { UploadImageToStorageUseCase } from "../../application/usecases/storage/UploadImageToStorageUseCase";
 import { ImageStorageRepositoryImpl } from "../../infra/services/storage/ImageStorageRepositoryImpl";
+import { GetAllArticlesUseCase } from "../../application/usecases/article/GetAllArticlesUseCase";
 
 const articleRepository = new ArticleRepositroyImplt();
 const createArticle = new CreateArticleUseCase(articleRepository);
@@ -20,6 +21,7 @@ const searchYoutubeVideos = new SearchYoutubeVideosUseCase(youtubeRepository);
 const imageStorageRepository = new ImageStorageRepositoryImpl();
 const downloadImage = new DownloadImageUseCase(imageStorageRepository);
 const uploadImage = new UploadImageToStorageUseCase(imageStorageRepository);
+const getArticles = new GetAllArticlesUseCase(articleRepository);
 
 export const articleController = new ArticleController(
   createArticle,
@@ -28,4 +30,5 @@ export const articleController = new ArticleController(
   saveArticle,
   downloadImage,
   uploadImage,
+  getArticles,
 );

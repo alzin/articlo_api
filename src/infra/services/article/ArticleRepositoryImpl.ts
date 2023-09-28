@@ -16,10 +16,11 @@ import Article from "../../../infra/DB/models/Article";
 import { log } from "console";
 
 import AWS from "aws-sdk";
+
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: "us-east-1",
+  region: "ap-northeast-1",
 });
 
 export class ArticleRepositroyImplt implements ArticleRepository {
@@ -36,6 +37,7 @@ export class ArticleRepositroyImplt implements ArticleRepository {
     size: CreateImageRequestSizeEnum._512x512,
   };
   private article: ArticleEntity = { title: "", body: "", imageUrl: "" };
+  private s3bucket: AWS.S3;
 
   constructor() {
     this.openai = new OpenAIApi(
@@ -43,6 +45,10 @@ export class ArticleRepositroyImplt implements ArticleRepository {
         apiKey: process.env.OPENAI_API_KEY,
       }),
     );
+
+    this.s3bucket = new AWS.S3({
+      params: { Bucket: process.env.AWS_S3_BUCKET_NAME },
+    });
   }
 
   async createArticle(prompt: string): Promise<ArticleEntity> {
@@ -122,5 +128,36 @@ export class ArticleRepositroyImplt implements ArticleRepository {
       console.error("ArticleRepositoryImpl: Error saving article:", error);
       return false;
     }
+  }
+
+  async getArticlesByUserId(userId: number) {
+    try {
+      const user = await User.findById(userId);
+      if (!user) {
+        console.log("User not found");
+        return [];
+      }
+
+      // Find all articles authored by the user
+      const articles = await Article.find({ author: userId });
+      const articleEntities: ArticleEntity[] = articles.map((article) => ({
+        title: article.title,
+        body: article.body,
+        imageUrl: this.getSignedUrl(article.imageUrl),
+      }));
+
+      return articleEntities;
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      return [];
+    }
+  }
+
+  private getSignedUrl(key: string): string {
+    return this.s3bucket.getSignedUrl("getObject", {
+      Bucket: process.env.AWS_S3_BUCKET_NAME,
+      Key: key,
+      Expires: 3600, // 1 hour
+    });
   }
 }

@@ -20,9 +20,13 @@ DbConnection.connect()
   })
   .catch(console.log);
 
-app.get("/", (_, res) => {
+app.get("/", (req, res) => {
   const today = new Date().toLocaleDateString();
   res.send(`Articlo SERVER is running ${today}`);
+});
+
+app.get("/api/articles", authenticateToken, (req: Request, res: Response) => {
+  articleController.getArticlesByUserId(req, res);
 });
 
 app.post("/api/login", (req, res) => {

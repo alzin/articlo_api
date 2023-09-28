@@ -26,6 +26,5 @@ export const authenticateToken = (
     }
     req.body.user = user;
     next();
-    log("user: ", user);
   });
 };

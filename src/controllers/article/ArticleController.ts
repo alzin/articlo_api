@@ -5,6 +5,7 @@ import { SearchYoutubeVideosUseCase } from "@application/usecases/article/Search
 import { SaveArticleUseCase } from "@application/usecases/article/SaveArticleUseCase";
 import { DownloadImageUseCase } from "@application/usecases/storage/DownloadImageUseCase";
 import { UploadImageToStorageUseCase } from "@application/usecases/storage/UploadImageToStorageUseCase";
+import { GetAllArticlesUseCase } from "@application/usecases/article/GetAllArticlesUseCase";
 
 export class ArticleController {
   constructor(
@@ -14,6 +15,7 @@ export class ArticleController {
     private saveArticle: SaveArticleUseCase,
     private downloadImage: DownloadImageUseCase,
     private uploadImage: UploadImageToStorageUseCase,
+    private getArticles: GetAllArticlesUseCase,
   ) {}
 
   async generateArticle(req: any, res: any) {
@@ -59,5 +61,19 @@ export class ArticleController {
         error: "error creating a new Article",
       });
     }
+  }
+
+  async getArticlesByUserId(req: any, res: any) {
+    const userId = req.body.user.id;
+    await this.getArticles
+      .execute(userId)
+      .then((articles) => {
+        log(`getArticlesByUserId: after exec 1 ${articles}`);
+        res.status(200).json(articles);
+      })
+      .catch((error) => {
+        log(`getArticlesByUserId: after exec 2 ${error}`);
+        res.status(500).json(error);
+      });
   }
 }
